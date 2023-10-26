@@ -7,6 +7,11 @@ module.exports = {
         await interaction.deferReply()
         const reply = await interaction.fetchReply();
         const ping = reply.createdTimestamp - interaction.createdTimestamp;
-        await interaction.editReply(`🏓la latence est de: ${ping}ms.\n\n🏓l'api à une latence de: ${Math.round(client.ws.ping)}ms`)
+        if (ping >= 500) {
+            await interaction.editReply(`❌ le ping est de: ${ping}ms.`)
+        }
+        else {
+            await interaction.editReply(`✅ le ping est de: ${ping}ms.`)
+        }
     }
 }
