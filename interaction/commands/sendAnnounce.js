@@ -1,4 +1,4 @@
-const {Client, GatewayIntentBits, Collection, Events} = require('discord.js');
+const discord = require("discord.js");
 const {SlashCommandBuilder} = require("discord.js");
 
 module.exports = {
@@ -6,22 +6,45 @@ module.exports = {
         .setName("annonce")
         .setDescription("Envoie un message dans un salon")
         .addStringOption(option =>
+            option.setName('titre')
+                .setDescription('Titre du message')
+                .setRequired(true))
+        .addStringOption(option =>
             option.setName('message')
-                .setDescription('test')
+                .setDescription('Contenu du message')
                 .setRequired(true)),
+
+
     async execute(interaction, client) {
 
+        let title = interaction.options.getString('titre');
         let message = interaction.options.getString('message');
+        const channel = client.channels.cache.get('1167138304152576184');
+        let now = new Date();
 
+        const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        };
+ 
         try {
-            const channel = client.channels.cache.get('1167138304152576184');
-
+            const embed = new discord.EmbedBuilder()
+                .setTitle(title)
+                .setDescription(message)
+                .setColor('#FF00B6')
+                .setImage('https://i.imgur.com/JXj36lU.png')
+                .setFooter({
+                    text: `${now.toLocaleString('fr-FR', options)}`
+                });
+            
             interaction.reply({
                 content: "✅ Le message à bien été envoyé dans : <#" + channel.id + ">.",
                 ephemeral: true
             });
 
-            channel.send(message);
+            channel.send({ embeds: [embed] });
         }
         catch (error){
             interaction.reply({

@@ -1,4 +1,4 @@
-const {Client, GatewayIntentBits, Collection, Events} = require('discord.js');
+const {Client, GatewayIntentBits, Collection, Events, ActivityType} = require('discord.js');
 
 const fs = require("node:fs");
 const path = require("node:path");
@@ -9,6 +9,26 @@ require("./interaction/commandsManager");
 const client = new Client({
     intents: [GatewayIntentBits.Guilds]
 })
+
+client.on("ready", () => {
+
+    function randomStatus() {
+        let status = [
+            "sulfuritium.fr:19132",
+            "dsc.gg/sulfuritium"
+        ]
+        let rstatus = Math.floor(Math.random() * status.length)
+
+        client.user.setActivity({
+            name: `${status[rstatus]}`,
+            type: ActivityType.Watching,
+        });
+    };
+
+    setInterval(randomStatus, 3000);
+});
+
+
 registerEvents();
 function registerEvents(){
     const eventFiles = fs.readdirSync(path.join(__dirname, "events"));
