@@ -14,12 +14,12 @@ module.exports = {
                 .setDescription('Contenu du message')
                 .setRequired(true)),
 
-
     async execute(interaction, client) {
 
         let title = interaction.options.getString('titre');
         let message = interaction.options.getString('message');
-        const channel = client.channels.cache.get('1167138304152576184');
+
+        const channel = client.channels.cache.get(`1167138304152576184`);
         let now = new Date();
 
         const options = {
