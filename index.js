@@ -1,4 +1,6 @@
 const {Client, GatewayIntentBits, Collection, Events, ActivityType} = require('discord.js');
+const { AuditLogEvent } = require('discord.js');
+const logs = require("discord-logs");
 
 const fs = require("node:fs");
 const path = require("node:path");
@@ -31,7 +33,6 @@ client.on("ready", () => {
 client.on("guildMemberAdd", member => {
     member.guild.channels.cache.find(chan => chan.id === "1167138304152576184").send("coucou");
 });
-
 
 registerEvents();
 function registerEvents(){
