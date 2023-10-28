@@ -47,7 +47,7 @@ module.exports = {
 
         try
         {
-            db.query(`SELECT * FROM players WHERE name = "${pseudo}"`, function (error, results) {
+            db.query(`SELECT * FROM players WHERE name LIKE "${pseudo}"`, function (error, results) {
 
                 if (error) {
                     interaction.reply({
@@ -58,7 +58,7 @@ module.exports = {
                 }
                 
                 results.map((res) => {
-                    content = content + "**" +  res.class + "**";
+                    content = content + res.class;
                 });
                 
                 const embed = new discord.EmbedBuilder()
