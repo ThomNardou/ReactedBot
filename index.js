@@ -28,6 +28,10 @@ client.on("ready", () => {
     setInterval(randomStatus, 3000);
 });
 
+client.on("guildMemberAdd", member => {
+    member.guild.channels.cache.find(chan => chan.id === "1167138304152576184").send("coucou");
+});
+
 
 registerEvents();
 function registerEvents(){

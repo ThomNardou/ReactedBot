@@ -35,6 +35,10 @@ module.exports = {
         
         let number = interaction.options.getInteger("nombre");
 
+        if (number === 0) {
+            number = 1;
+        }
+
         let content = "";
         let place = 1;
 
@@ -50,11 +54,9 @@ module.exports = {
         try
         {
             db.query(`SELECT * FROM user_money ORDER BY money DESC LIMIT ${number}`, function (error, results) {
-            
-                if (error) throw error;
                 
                 results.map((res) => {
-                    content = content +  "["+ place + "] "+ res.name + " : " + res.money + "\n";
+                    content = content +  "["+ place + "] " + "**" +  res.name + "**" +" : " + res.money + "$\n";
                     ++place;
                 })
                 
@@ -68,6 +70,7 @@ module.exports = {
                 });
 
                 interaction.reply({ embeds: [embed] });
+                
 
                 place = 1;
                 number = 0;
