@@ -52,6 +52,7 @@ module.exports = {
             db.query(`SELECT * FROM user_money WHERE name LIKE "${pseudo}%"`, function (error, results) {
                 
                 if (results !== null) {
+                    
                     results.map((res) => {
                         content = content + res.money + "$\n";
                     })

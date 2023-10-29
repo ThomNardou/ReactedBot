@@ -9,6 +9,7 @@ module.exports = {
         await interaction.deferReply()
         const reply = await interaction.fetchReply();
         const ping = reply.createdTimestamp - interaction.createdTimestamp;
+        
         if (ping >= 500) {
             await interaction.editReply(`❌ le ping est de: ${ping}ms.`)
         }

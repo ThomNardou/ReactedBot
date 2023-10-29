@@ -5,6 +5,11 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("sondage")
         .setDescription("Permet de créer un sondage")
+        .addChannelOption(option => 
+            option.setName("channel")
+                .setDescription("Channel que le bot doit rejoindre")
+                .setRequired(true)
+        )
         .addStringOption(option =>
             option.setName('titre')
                 .setDescription('Titre du message')
@@ -24,7 +29,10 @@ module.exports = {
         let title = interaction.options.getString('titre');
         let firstOption = interaction.options.getString('optiona');
         let secondOption = interaction.options.getString('optionb');
-        const channel = client.channels.cache.get('1167138304152576184');
+        let channelId = interaction.options.getChannel('channel');
+
+        const channel = client.channels.cache.get(channelId.id);
+        
         let now = new Date();
 
         const options = {
