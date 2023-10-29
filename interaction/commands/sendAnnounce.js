@@ -37,7 +37,7 @@ module.exports = {
                 .setImage('https://i.imgur.com/JXj36lU.png')
                 .setFooter({
                     text: `${now.toLocaleString('fr-FR', options)}`
-                });
+            });
             
             interaction.reply({
                 content: "✅ Le message à bien été envoyé dans : <#" + channel.id + ">.",
