@@ -7,7 +7,7 @@ module.exports = {
         .setDescription("Envoie un message dans un salon")
         .addChannelOption(option => 
             option.setName("channel")
-                .setDescription("Channel que le bot doit rejoindre")
+                .setDescription("Channel dans lequel l'annonce sera envoyé")
                 .setRequired(true)
         )
         .addStringOption(option =>

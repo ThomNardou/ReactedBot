@@ -7,7 +7,7 @@ module.exports = {
         .setDescription("Permet de créer un sondage")
         .addChannelOption(option => 
             option.setName("channel")
-                .setDescription("Channel que le bot doit rejoindre")
+                .setDescription("Channel dans lequel le sondage sera envoyé")
                 .setRequired(true)
         )
         .addStringOption(option =>
@@ -32,7 +32,7 @@ module.exports = {
         let channelId = interaction.options.getChannel('channel');
 
         const channel = client.channels.cache.get(channelId.id);
-        
+
         let now = new Date();
 
         const options = {
