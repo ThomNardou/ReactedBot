@@ -22,7 +22,7 @@ module.exports = {
 
         if (voiceConnection) {
             interaction.reply({
-                content: `Le bot à bien rejoins le vocal ${interaction.options.getChannel('channel')}`,
+                content: `Le bot a bien rejoins le vocal ${interaction.options.getChannel('channel')}`,
                 ephemeral: true
             });
         }

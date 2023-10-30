@@ -47,7 +47,7 @@ module.exports = {
 
         try
         {
-            db.query(`SELECT * FROM players WHERE name LIKE "${pseudo}"`, function (error, results) {
+            db.query(`SELECT * FROM players WHERE name LIKE "${pseudo}%"`, function (error, results) {
 
                 if (error) {
                     interaction.reply({

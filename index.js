@@ -1,16 +1,18 @@
 const {Client, GatewayIntentBits, Collection, Events, ActivityType} = require('discord.js');
-const { AuditLogEvent } = require('discord.js');
-const logs = require("discord-logs");
+const discord = require("discord.js");
 
 const fs = require("node:fs");
 const path = require("node:path");
+const Jimp = require('jimp');
 require("dotenv").config();
 const interactionCommands = new Collection()
 module.exports.interactionCommands = interactionCommands
 require("./interaction/commandsManager");
+
 const client = new Client({
-    intents: [GatewayIntentBits.Guilds]
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers]
 })
+
 
 client.on("ready", () => {
 
@@ -31,7 +33,24 @@ client.on("ready", () => {
 });
 
 client.on("guildMemberAdd", member => {
-    member.guild.channels.cache.find(chan => chan.id === "1167138304152576184").send("coucou");
+    let now = new Date();
+
+    const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    };
+
+    const welcomechannel = member.guild.channels.cache.find(ch => ch.id === '1168296700599877823');
+    const embed = new discord.EmbedBuilder()
+        .setTitle("Nouveau Membre : ")
+        .setDescription(`Bienvenue à ${member} sur le serveur !
+        **rejoint le** : ${now.toLocaleString('fr-FR', options)} (<t:${parseInt(member.joinedTimestamp / 1000)}:R>)`)
+        .setColor('#00FF59')
+        .setThumbnail(member.user.displayAvatarURL())
+
+    welcomechannel.send({embeds: [embed] });
 });
 
 registerEvents();
