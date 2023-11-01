@@ -42,15 +42,27 @@ client.on("guildMemberAdd", member => {
         day: 'numeric',
     };
 
-    const welcomechannel = member.guild.channels.cache.find(ch => ch.id === '1168296700599877823');
+    const channel = member.guild.channels.cache.find(ch => ch.id === '1168296700599877823');
     const embed = new discord.EmbedBuilder()
         .setTitle("Nouveau Membre : ")
-        .setDescription(`Bienvenue à ${member} sur le serveur !
-        **rejoint le** : ${now.toLocaleString('fr-FR', options)} (<t:${parseInt(member.joinedTimestamp / 1000)}:R>)`)
+        .setDescription(`Bienvenue à ${member} sur le serveur !\n\n**rejoint le** : ${now.toLocaleString('fr-FR', options)} (<t:${parseInt(member.joinedTimestamp / 1000)}:R>)`)
         .setColor('#00FF59')
         .setThumbnail(member.user.displayAvatarURL())
 
-    welcomechannel.send({embeds: [embed] });
+    channel.send({embeds: [embed] });
+});
+
+client.on("guildMemberRemove", member => {
+
+    const channel = member.guild.channels.cache.find(ch => ch.id === '1168296700599877823');
+    const embed = new discord.EmbedBuilder()
+        .setTitle("Au revoir : ")
+        .setDescription(`Au revoir à ${member} ! Qui vient de quitter le serveur `)
+        .setColor('FF0000')
+        .setThumbnail(member.user.displayAvatarURL())
+
+    channel.send({embeds: [embed] });
+    
 });
 
 registerEvents();
