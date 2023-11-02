@@ -3,8 +3,9 @@ const discord = require("discord.js");
 
 const fs = require("node:fs");
 const path = require("node:path");
-const Jimp = require('jimp');
+
 require("dotenv").config();
+
 const interactionCommands = new Collection()
 module.exports.interactionCommands = interactionCommands
 require("./interaction/commandsManager");
