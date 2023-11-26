@@ -1,20 +1,14 @@
-const { Client, GatewayIntentBits, Collection, Events } = require('discord.js');
-const { SlashCommandBuilder } = require("discord.js");
-const { StreamType, createAudioPlayer, createAudioResource, joinVoiceChannel } = require("@discordjs/voice");
-const ytdl = require("ytdl-core-discord");
+const {Client, GatewayIntentBits, Collection, Events} = require('discord.js');
+const {SlashCommandBuilder} = require("discord.js");
+const { StreamType, createAudioPlayer, createAudioResource, joinVoiceChannel, VoiceConnection } = require("@discordjs/voice");
+const ytdl = require("ytdl-core");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("join")
-        .setDescription("Fais rejoindre le bot dans le vocal"),
+        .setDescription("fais rejoindre le bot dans le vocal"),
 
     async execute(interaction) {
-        if (!interaction.member.voice.channel) {
-            return interaction.reply({
-                content: "Vous devez être dans un salon vocal pour utiliser cette commande.",
-                ephemeral: true
-            });
-        }
 
         const voiceConnection = joinVoiceChannel({
             channelId: interaction.member.voice.channel.id,
@@ -22,19 +16,28 @@ module.exports = {
             adapterCreator: interaction.guild.voiceAdapterCreator,
         });
 
-        const stream = ytdl('https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley', { filter: 'audioonly' });
+        const stream = ytdl('https://www.youtube.com/watch?v=dQw4w9WgXcQ', { filter: 'audioonly' });
 
-        const resource = createAudioResource(stream, { inputType: StreamType.Arbitrary, volume: 1.0 });
-
+        const resource = createAudioResource(stream, { inputType: StreamType.Arbitrary });
         const player = createAudioPlayer();
 
-        voiceConnection.subscribe(player);
+        // voiceConnection.subscribe(player);
 
-        player.play(resource);
+        player.play(resource);  
+        
 
+        player.on('stateChange', (oldState, newState) => {
+            if (newState.status === 'playing') {
+                console.log('Lecture audio en cours.');
+            } else if (newState.status === 'idle') {
+                console.log('Lecture audio terminée.');
+            }
+        });
+        
         interaction.reply({
-            content: `Le bot a bien rejoint le vocal ${interaction.member.voice.channel}`,
+            content: `Le bot a bien rejoins le vocal ${interaction.member.voice.channel}`,
             ephemeral: true
         });
+        
     }
-};
+}

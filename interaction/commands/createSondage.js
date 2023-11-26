@@ -8,8 +8,7 @@ module.exports = {
         .addChannelOption(option => 
             option.setName("channel")
                 .setDescription("Channel dans lequel le sondage sera envoyé")
-                .setRequired(true)
-        )
+                .setRequired(true))
         .addStringOption(option =>
             option.setName('titre')
                 .setDescription('Titre du message')
